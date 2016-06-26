@@ -6,7 +6,7 @@ var temp;
 
 /* alert('begin emps, employeers and temp  '+emps+' '+employeers+' '+temp); */ 	
 class Emp{
-    constructor(id,name, surname, ptrnmc, zpt, hourlyzpt){
+    constructor(id, name, surname, ptrnmc, zpt, hourlyzpt){
         this.id = id;
 		this.name = name;
         this.surname = surname;
@@ -104,14 +104,14 @@ function inObjs(data) {
 			}/* alert('after if-else emps all '+ emps); */
 		}/* alert('after for y, emps all '+ emps); */
     }
-	alert('temp: '+temp);
+	/* alert('temp: '+temp);
 	alert('emps[0].name, emps[0].middleMonthSalary '+ emps[0].name+' '+emps[0].middleMonthSalary);
-	alert('emps[1].name, emps[1].middleMonthSalary '+ emps[1].name+' '+emps[1].middleMonthSalary);
+	alert('emps[1].name, emps[1].middleMonthSalary '+ emps[1].name+' '+emps[1].middleMonthSalary); */
 	/* alert('emps[0]: '+ emps[0].name);
 	alert('employeers: '+employeers);
 	alert('empsfix: '+empsfix);
 	$('.underbody').append('<p>work</p>'); */
-	alert('emps all '+ emps);
+	/* alert('emps all '+ emps); */
 }
    /*  alert(' 2 emps[0].name, emps[0].middleMonthSalary '+ emps[0].name+' '+emps[0].middleMonthSalary);
 	alert(' 2 emps[1].name, emps[1].middleMonthSalary '+ emps[1].name+' '+emps[1].middleMonthSalary); */
@@ -136,13 +136,47 @@ function inObjs(data) {
 		alert('emps: '+emps);
 	}
 } */
-function showAllRecords(){
-	for(var p = 0; p<emps.length; p++){
-			$('.underbody').append('id: '+emps[p].id+' name: '+emps[p].name+' surname: '+emps[p].surname+' patronymic: '+emps[p].ptrnmc+' zpt: '+emps[p].zpt+' hourly?: '+emps[p].hourlyzpt+' MMS: '+emps[p].middleMonthSalary+'; ');
+function firstfivenames(){
+	$('#fivenames').click(function(){
+		$('.underbody').empty();
+		for(var p = 0; p<5; p++){
+			$('.underbody').append('<b> name: </b> '+emps[p].name+' </p> ');
+		}/* } */
+		/* for(var p = 0; p<emps.length; p++){
+			$('.underbody').append(emps[p].id+' '+emps[p].name+' '+emps[p].surname+' '+emps[p].ptrnmc+' '+emps[p].zpt+' '+emps[p].hourlyzpt);
+		} */
+		
+	});
+	
+}
+function lastThreeId(){
+	$('#ThreeId').click(function(){
+		$('.underbody').empty();
+		for(var p = (emps.length-3); p<(emps.length); p++){
+			$('.underbody').append('<b> id: </b> '+emps[p].id+' </p> ');
 		}
+	});
+}
+function showAllRecords(option1,option2){
+	$('.underbody').empty();
+	/* if(!(option1===undefined)){
+		if(!(option2===undefined)){
+			for(var p = 0; p<option1; p++){
+			$('.underbody').append('<p><b>'+option2+' </b> '+emps[p].name+';</p> ');
+		}} else{
+			for(var p = 0; p<option1; p++){
+			$('.underbody').append('<p><b>id: </b> '+emps[p].id+'<b> name: </b> '+emps[p].name+'<b> MMS(среднемесячный заработок): </b> '+emps[p].middleMonthSalary+';</p> ');
+		}
+		}
+	}else{ */
+		for(var p = 0; p<emps.length; p++){
+			$('.underbody').append('<p><b>id: </b> '+emps[p].id+'<b> name: </b> '+emps[p].name+'<b> MMS(среднемесячный заработок): </b> '+emps[p].middleMonthSalary+';</p> ');
+		}/* } */
+	
 }
 function allrecords(){
 	$('#allrecords'	).click(function(){
+		$('.underbody').empty();
 		showAllRecords();
 		/* for(var p = 0; p<emps.length; p++){
 			$('.underbody').append(emps[p].id+' '+emps[p].name+' '+emps[p].surname+' '+emps[p].ptrnmc+' '+emps[p].zpt+' '+emps[p].hourlyzpt);
@@ -152,6 +186,7 @@ function allrecords(){
 }
 function listOfDownMiddleMonthSalary(){
 	$('#listOfMiddleMonthSalary').click(function(){
+		
 		var sortedId = [];
 		emps.sort(function (a, b) {
 			if (a.middleMonthSalary < b.middleMonthSalary) {
@@ -186,14 +221,18 @@ $(document).ready( function(){
 	dataType:'json',
     success: function(data){
 		/* alert(data.name+" data.name"); */
-		alert(data[0]+" data0");
-		alert(data[1]+" data1");
-        inObjs(data);
+			/* alert(data[0]+" data0");
+			alert(data[1]+" data1"); */
+			inObjs(data);
 		//mainfunc();
-		alert('in success function '+emps); 
+		/* 	alert('in success function '+emps);  */
 		/* $('.underbody').append(emps[0].name); */
-		allrecords();
-		listOfDownMiddleMonthSalary();
+			allrecords();  						// показывает все записи
+			listOfDownMiddleMonthSalary();		// показывает отсортированный массив записей
+			firstfivenames();					// показывает первые пять имен из массива отсортированных записей
+			lastThreeId();						// показывает последние три id из массива отсортированных записей
+			
+			
 		}
     });
 	//mainfunc();
