@@ -1,37 +1,39 @@
 
 'use strict'
-alert('dd');
+alert('begin');
 class Emp{
-    constructor(name, surname, ptrnmc, zpt){
-        this.name = name;
+    constructor(id,name, surname, ptrnmc, zpt, hourlyzpt){
+        this.id = id;
+		this.name = name;
         this.surname = surname;
         this.ptrnmc = ptrnmc;
         this.zpt = zpt;
+		this.hourlyzpt = hourlyzpt;
     }
 
-    middleMonthSalary(){
+    get middleMonthSalary(){
         return (this.zpt)*12/12;
     }
 }
 
 
 class EmpWithHourlySalary extends Emp{
-    constructor(name, surname, ptrnmc, zpt, zptInHour){
-      super(name, surname, ptrnmc, zpt);
-      this.zptInHour = zptInHour;
+    constructor(id, name, surname, ptrnmc, zpt, hourlyzpt){
+      super(id, name, surname, ptrnmc, zpt, hourlyzpt);
+      
     }
-    middleMonthSalary(){
-        return (this.zptInHour)*8*2.8;
+    get middleMonthSalary(){
+        return (this.zpt)*8*2.8;
     }
 
 }
 
 class  EmpWithFixedSalary extends Emp{
-    constructor(name, surname, ptrnmc, zpt){
-        super(name, surname, ptrnmc, zpt);
+    constructor(id, name, surname, ptrnmc, zpt, hourlyzpt){
+        super(id, name, surname, ptrnmc, zpt, hourlyzpt);
     }
-    middleMonthSalary(){
-        return (this.zpt)*8*2.8;
+    get middleMonthSalary(){
+        return (this.zpt)*12/12;
     }
 }
 
@@ -46,10 +48,21 @@ console.log('test: '+rab4.name+" "+rab4.zptInHour+" "+rab4.middleMonthSalary());
 /*
 console.log(employeers[1].name);
 */
-//var emps = new Emp[];
+var emps = [];
+var emph = [];
+var empf = [];
 var empsfix = [];//массив объектов класса работников с фиксированной зп
 var emphourly = [];//массив объектов класса работников с почасовой оплатой
 var employeers = [];
+var temp;
+/* function objs(ind, pr){
+	if(pr!=0){
+		eval('var emph_'+ind);
+	} else {
+		eval('var empf_'+ind);
+	}
+	return;
+} */
 function inObjs(data) {
     var employs = [];
     for(var i = 0;i<data.length;i++){
@@ -60,16 +73,39 @@ function inObjs(data) {
         employeers[j] = employs[j];
 		for(var y = 0;y<employeers.length;y++){
 			if(employeers[y][5]!=0){
-				emphourly[y] = employeers[y];
+				/* var prprty = 1; */
+				
+				/* eval("var emph_"+i+"="+ */  temp =  new EmpWithHourlySalary(employeers[y][0],
+																employeers[y][1],
+																employeers[y][2],
+																employeers[y][3],
+																employeers[y][4],
+																employeers[y][5]);
+				emps[y] = temp;
+				/* alert('temp.name: '+temp.name);
+				alert('emph[y].name and y  and middleMonthSalary '+emph[y].name+' '+y+' '+ emph[y].middleMonthSalary); */
+				
+			    /*  alert(y);
+				 alert(emph_1);
+				 alert(emph_2); */
 			} else {
-				empsfix[y] = employeers[y];
+				temp =  new EmpWithFixedSalary(employeers[y][0],
+																employeers[y][1],
+																employeers[y][2],
+																employeers[y][3],
+																employeers[y][4],
+																employeers[y][5]);
+				emps[y] = temp;
 			}
 		}
     }
-	
-	alert('emphourly: '+emphourly);
+	alert('temp: '+temp);
+	alert('emps[0].name, emps[0].middleMonthSalary '+ emps[0].name+' '+emps[0].middleMonthSalary);
+	alert('emps[1].name, emps[1].middleMonthSalary '+ emps[1].name+' '+emps[1].middleMonthSalary);
+	/* alert('emps[0]: '+ emps[0].name);
+	alert('employeers: '+employeers);
 	alert('empsfix: '+empsfix);
-	$('.underbody').append(employeers);
+	$('.underbody').append('<p>work</p>'); */
 }
 
 $.ajax({
@@ -78,12 +114,18 @@ $.ajax({
     type: 'get',
 	dataType:'json',
     success: function(data){
-		alert(data.name+" data.name");
+		/* alert(data.name+" data.name"); */
 		alert(data[0]+" data0");
 		alert(data[1]+" data1");
         inObjs(data);
     }
 
 });
-alert('employeers: '+employeers);
-$('.underbody').append(employeers);
+/* alert('employeers: '+employeers); */
+$('.underbody').append('ggggg');
+$(document).ready( function(){
+  $('.underbody').append(employeers);// вывод всех записей
+  /*  alert(emph[0]); */
+  /*alert(emph_2);
+  alert(emph_0); */
+});
