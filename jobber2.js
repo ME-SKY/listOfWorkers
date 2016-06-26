@@ -155,14 +155,21 @@ function listOfDownMiddleMonthSalary(){
 		var sortedId = [];
 		emps.sort(function (a, b) {
 			if (a.middleMonthSalary < b.middleMonthSalary) {
+				
 				return 1;
 			}
-			if (a.name < b.name) {
-				return -1;
-			}
-		// a должно быть равным b
+			if ((a.middleMonthSalary == b.middleMonthSalary)&&(a.name > b.name)) {
+					return 1;
+				}
+			
 			return 0;
 		});
+		/* emps.sort(function (a, b) {
+			if (a.name > b.name) {
+				return 1;
+			}
+			return 0;
+		}); */
 		/* for(var p = 0; p<emps.length; p++){
 			$('.underbody').append(emps[p].id+' '+emps[p].name+' '+emps[p].surname+' '+emps[p].ptrnmc+' '+emps[p].zpt+' '+emps[p].hourlyzpt);
 		}
