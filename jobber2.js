@@ -136,12 +136,38 @@ function inObjs(data) {
 		alert('emps: '+emps);
 	}
 } */
+function showAllRecords(){
+	for(var p = 0; p<emps.length; p++){
+			$('.underbody').append('id: '+emps[p].id+' name: '+emps[p].name+' surname: '+emps[p].surname+' patronymic: '+emps[p].ptrnmc+' zpt: '+emps[p].zpt+' hourly?: '+emps[p].hourlyzpt+' MMS: '+emps[p].middleMonthSalary+'; ');
+		}
+}
 function allrecords(){
 	$('#allrecords'	).click(function(){
-		for(var p = 0; p<emps.length; p++){
+		showAllRecords();
+		/* for(var p = 0; p<emps.length; p++){
+			$('.underbody').append(emps[p].id+' '+emps[p].name+' '+emps[p].surname+' '+emps[p].ptrnmc+' '+emps[p].zpt+' '+emps[p].hourlyzpt);
+		} */
+		
+	});
+}
+function listOfDownMiddleMonthSalary(){
+	$('#listOfMiddleMonthSalary').click(function(){
+		var sortedId = [];
+		emps.sort(function (a, b) {
+			if (a.middleMonthSalary < b.middleMonthSalary) {
+				return 1;
+			}
+			if (a.name < b.name) {
+				return -1;
+			}
+		// a должно быть равным b
+			return 0;
+		});
+		/* for(var p = 0; p<emps.length; p++){
 			$('.underbody').append(emps[p].id+' '+emps[p].name+' '+emps[p].surname+' '+emps[p].ptrnmc+' '+emps[p].zpt+' '+emps[p].hourlyzpt);
 		}
-		
+ */	
+	showAllRecords()	
 	});
 }
 $('.underbody').append('ggggg');
@@ -160,6 +186,7 @@ $(document).ready( function(){
 		alert('in success function '+emps); 
 		/* $('.underbody').append(emps[0].name); */
 		allrecords();
+		listOfDownMiddleMonthSalary();
 		}
     });
 	//mainfunc();
